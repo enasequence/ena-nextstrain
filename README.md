@@ -3,6 +3,8 @@
 
 This instance enables the generation of phylogenetic analyses for Zika and West Nile viruses using Nextstrain.
 
+## [Installing Nextstrain](https://docs.nextstrain.org/en/latest/install.html)
+
 Usage:
 
 1. Clone the repository:
