@@ -7,20 +7,20 @@ Usage:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/KhadimGueyeKGY/ENA_nextstrain_phylogeny.git
+   git clone https://github.com/enasequence/ena-nextstrain.git
    ```
 
 2. Navigate to the project directory:
    ```
-   cd ENA_nextstrain_phylogeny
+   cd ena-nextstrain
    ```
 
 3. Run the main Python script:
    ```
-   python main.py
+   python main.py -o output/
    ```
 
 4. View the results in Nextstrain's Auspice visualization tool:
    ```
-   nextstrain view auspice_res
+   nextstrain view output/
    ```
