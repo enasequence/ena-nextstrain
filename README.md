@@ -19,6 +19,10 @@ Usage:
    ```
    python main.py -o output/
    ```
+   Or
+   ```
+   sh nextstrain_job.sh
+   ```
 
 4. View the results in Nextstrain's Auspice visualization tool:
    ```
