@@ -21,6 +21,6 @@ rm -rf package/*/results/
 rm -rf package/*/auspice
 rm -rf  package/*/.snakemake
 
-/hps/nobackup/cochrane/ena/users/analyser/miniconda3/bin/python main.py -o auspice_res
+/hps/nobackup/cochrane/ena/users/analyser/miniconda3/bin/python main.py -o auspice_res -l /hps/nobackup/cochrane/ena/nexstrain/output/
 
 

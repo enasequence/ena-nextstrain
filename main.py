@@ -17,6 +17,8 @@ def get_args():
     # Add argument for output with a shorthand '-o'
     parser.add_argument('-o', '--output', type=str, required=True, 
                         help='Path to the output directory.')
+    parser.add_argument('-l', '--log', type=str, required=True,
+                        help='Path for logging.')
     
     # Parse arguments
     args = parser.parse_args()
@@ -59,7 +61,7 @@ def main():
     West_Nile_virus, Zika, monkeypox = pathogens()
 
     # output log configuration
-    logging.basicConfig(filename='output.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename=args.log+'output.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
     viruses = {        
         'monkeypox': (monkeypox, 'data/Monkeypox', 'package/monkeypox/'),
@@ -73,8 +75,8 @@ def main():
     print ('---[ process done ]---')
     
     os.system("mv package/monkeypox/auspice/monkeypox_mpxv.json package/monkeypox/auspice/ena_nextstrain_phylogeny_mpxv.json")
-    os.system ("mv package/monkeypox/auspice/monkeypox_mpxv_root-sequence.json package/monkeypox/auspice/ena_nextstrain_phylogeny_mpxv_root-sequence.json")
-    os.system (f"cp -rf  package/*/auspice/* {output}")
+    os.system("mv package/monkeypox/auspice/monkeypox_mpxv_root-sequence.json package/monkeypox/auspice/ena_nextstrain_phylogeny_mpxv_root-sequence.json")
+    os.system(f"cp -rf  package/*/auspice/* {output}")
 
     #----------------------------- view 
 
