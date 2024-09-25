@@ -37,8 +37,8 @@ class DownData:
             os.system('curl "'+DownData.BASE_PORTAL_API_SEARCH_FASTA+i+'?download=true" --output '+output+'/'+i+'.fasta')
     
 
-    def contry_to_continent(ContryInput):
-        ContinentContry = pd.read_csv("package/continent_contry.txt", sep="\t")
+    def contry_to_continent(output_dir, ContryInput):
+        ContinentContry = pd.read_csv(f"{output_dir}/../../continent_contry.txt", sep="\t")
         Continent = ContinentContry["Continent"]
         Contry = ContinentContry["Country"]
         for i in range(len(Contry)):
@@ -121,7 +121,7 @@ class DownData:
                     first_public = DownData.convert_date(first_public)
                     isolate = accession
                     if ':' in country:
-                        region, ctry = DownData.contry_to_continent(country.split(':')[0])
+                        region, ctry = DownData.contry_to_continent(output_dir, country.split(':')[0])
                         division = country.split(':')[1]
                         if ',' in division:
                             city = division.split(',')[1]
@@ -129,7 +129,7 @@ class DownData:
                         else:
                             city = '?'
                     else:
-                        region, ctry = DownData.contry_to_continent(country)
+                        region, ctry = DownData.contry_to_continent(output_dir, country)
                         division = '?'
                         ctry = '?'
                         city = '?'
@@ -153,7 +153,7 @@ class DownData:
                     isolate = accession 
 
                     if ':' in country:
-                        region, ctry = DownData.contry_to_continent(country.split(':')[0])
+                        region, ctry = DownData.contry_to_continent(output_dir, country.split(':')[0])
                         division = country.split(':')[1]
                         if ',' in division:
                             city = division.split(',')[1]
@@ -161,7 +161,7 @@ class DownData:
                         else:
                             city = '?'
                     else:
-                        region, ctry = DownData.contry_to_continent(country)
+                        region, ctry = DownData.contry_to_continent(output_dir, country)
                         division = '?'
                         city = '?'
 

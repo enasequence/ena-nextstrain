@@ -17,6 +17,8 @@ def get_args():
     # Add argument for output with a shorthand '-o'
     parser.add_argument('-o', '--output', type=str, required=True, 
                         help='Path to the output directory.')
+    parser.add_argument('-w', '--workflowDir', type=str, required=True,
+                        help='Path to the workflow directory.')
     
     # Parse arguments
     args = parser.parse_args()
@@ -25,6 +27,7 @@ def get_args():
 
 args = get_args()
 output = args.output
+workflowDir = args.workflowDir
 
 def dropduplicates (dir_metadata):
     metadata = dir_metadata+'/data/metadata.tsv'
@@ -35,7 +38,7 @@ def dropduplicates (dir_metadata):
 
 def pathogens ():
     try:
-        with open('pathogens.yaml', 'r') as file:
+        with open(f'{workflowDir}/pathogens.yaml', 'r') as file:
             pathogens = yaml.safe_load(file)
             West_Nile_virus = str(pathogens['West Nile virus'])
             Zika = str(pathogens['Zika'])
@@ -57,14 +60,13 @@ def process_virus(virus, data_dir, package_dir, virus_name):
 
 def main():
     West_Nile_virus, Zika, monkeypox = pathogens()
-
     # output log configuration
-    logging.basicConfig(filename='output.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename='/hps/nobackup/cochrane/ena/nexstrain/output.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     viruses = {        
-        'monkeypox': (monkeypox, 'data/Monkeypox', 'package/monkeypox/'),
-        'west nile': (West_Nile_virus, 'data/West_Nile_virus', 'package/West_Nile/'),
-        'zika': (Zika, 'data/Zika', 'package/zika/')
+        'monkeypox': (monkeypox, f'{workflowDir}/data/Monkeypox', f'{workflowDir}/package/monkeypox/'),
+        'west nile': (West_Nile_virus, f'{workflowDir}/data/West_Nile_virus', f'{workflowDir}/package/West_Nile/'),
+        'zika': (Zika, f'{workflowDir}/data/Zika', f'{workflowDir}/package/zika/')
     }
 
     for virus_name, (virus, data_dir, package_dir) in viruses.items():
@@ -72,9 +74,9 @@ def main():
     
     print ('---[ process done ]---')
     
-    os.system("mv package/monkeypox/auspice/monkeypox_mpxv.json package/monkeypox/auspice/ena_nextstrain_phylogeny_mpxv.json")
-    os.system ("mv package/monkeypox/auspice/monkeypox_mpxv_root-sequence.json package/monkeypox/auspice/ena_nextstrain_phylogeny_mpxv_root-sequence.json")
-    os.system (f"cp -rf  package/*/auspice/* {output}")
+    os.system(f"mv {workflowDir}/package/monkeypox/auspice/monkeypox_mpxv.json {workflowDir}/package/monkeypox/auspice/ena_nextstrain_phylogeny_mpxv.json")
+    os.system(f"mv {workflowDir}/package/monkeypox/auspice/monkeypox_mpxv_root-sequence.json {workflowDir}/package/monkeypox/auspice/ena_nextstrain_phylogeny_mpxv_root-sequence.json")
+    os.system (f"cp -rf  {workflowDir}/package/*/auspice/* {output}")
 
     #----------------------------- view 
 
